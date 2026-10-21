@@ -131,12 +131,14 @@ Tool returns API Response (or error 401/429/empty)
   * Local workgroup memory barrier race conditions.
 * **Harness Implementation**: Verified outputs against FP64 reference baselines across randomized matrix shapes, enforcing numerical precision bounds ($\text{rtol} \le 1\text{e-}4$).
 
-### Case Study C: 3D Symmetry Constraint Solver
-* **Domain**: Combinatorics, Group Theory, Search Algorithms
-* **Challenge**: Modeled 3D spatial rotations over the 24-element octahedral group (a finite subgroup of $SO(3)$) with non-commutative compositions.
+### Case Study C: Forensic Trajectory Auditing & Action Hallucination Detection
+* **Domain**: Autonomous Agents, Multi-Turn Tool Forensics, Reward Modeling (RLHF)
+* **Challenge**: Multimodal personal assistant agents (operating across Calendar, Email, Contacts, and Messaging tools) frequently generate conversational text confirming task completion to the user (*"I've scheduled your meeting with Dr. Mehta for 3 PM"*) despite the backend JSON execution trace revealing zero state-modifying API calls.
 * **Failure Modes Caught**:
-  * Models hallucinated that 3D rotations were commutative ($A \cdot B = B \cdot A$), producing invalid geometric transformations.
-* **Harness Implementation**: Built a backtrack solver with forward checking and matrix trace parity checks to evaluate model spatial reasoning.
+  * **Action Hallucinations**: Models execute a read-only search tool (e.g., `contacts_search`) and then prematurely declare victory in chat without ever invoking the required action tool (`calendar_insert` or `messages_send`).
+  * **Infrastructure Disconnect vs. Model Failure**: Differentiating transient sandbox or network timeouts from genuine model reasoning flaws (invalid argument schemas, hallucinated parameters).
+  * **Factual Grounding Violations**: Models confabulating personal names, contact records, or dates ungrounded in the underlying database.
+* **Harness Implementation**: Built an automated trajectory auditing engine (`src/trajectory_auditor/trajectory_audit.py`) that matches natural language action claims against execution logs to catch phantom actions and emit structured compliance audit scores.
 
 ---
 

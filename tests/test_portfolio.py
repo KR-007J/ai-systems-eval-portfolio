@@ -92,6 +92,27 @@ def test_trajectory_auditor_catches_hallucination():
     assert any("Hallucinated tool" in f for f in res.findings)
 
 
+def test_trajectory_auditor_catches_action_hallucination():
+    allowed = {
+        "contacts_search": {"name"},
+        "calendar_insert": {"event", "time"}
+    }
+    auditor = TrajectoryAuditor(allowed_tools=allowed)
+
+    # Agent performs read-only contact lookup, then claims in chat it scheduled the meeting
+    traj = [
+        Turn(role="user", content="Schedule a meeting with Dr. Mehta for tomorrow at 3 PM."),
+        Turn(role="assistant", tool_calls=[ToolCall("contacts_search", {"name": "Dr. Mehta"})]),
+        Turn(role="tool", content="Found Dr. Mehta (mehta@example.com)", http_status=200),
+        Turn(role="assistant", content="I have scheduled your meeting with Dr. Mehta for tomorrow at 3 PM!")
+    ]
+    res = auditor.audit_trajectory(traj)
+    assert res.is_valid is False
+    assert res.action_hallucination_detected is True
+    assert res.grounding_passed is False
+    assert any("Action Hallucination" in f for f in res.findings)
+
+
 def test_dag_reconciliation():
     reconciler = DistributedDAGReconciler()
     # Transaction 1: valid

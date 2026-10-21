@@ -36,11 +36,29 @@ Evaluating large language models on static multiple-choice questions (MMLU, GSM8
 ---
 
 ## 🛡️ Flagship Production Tool: AgentTrace
-> **Apple Pro Forensic Agent Observatory & Action-Hallucination Interceptor**
+> **Forensic Agent Observatory & Action-Hallucination Interceptor**
 
-![AgentTrace Apple Pro Visual Observatory](docs/assets/apple_pro_agenttrace.png)
+`AgentTrace` is an open-source runtime tracing, forensic trajectory auditing, and cryptographic state verification engine for autonomous AI agents. Built to intercept **Action Hallucinations** (Ghost Actions, Masked 403 Failures, and Circular Loops) before ungrounded agent responses reach users.
 
-**AgentTrace** is an open-source runtime tracing, forensic trajectory auditing, and cryptographic state verification engine for autonomous AI agents. Built to intercept **Action Hallucinations** (Ghost Actions, Masked 403 Failures, and Circular Loops) before ungrounded agent responses reach users.
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                             AGENTTRACE RUNTIME ARCHITECTURE                            │
+│                                                                                        │
+│   Agent Action ──► Ephemeral Sandbox ──► Forensic Auditor ──► Calibrated SQS Gating   │
+│                          │                      │                   (0.0 - 5.0)        │
+│                          ▼                      ▼                                      │
+│                    SHA-256 Delta        Action Hallucination?                          │
+│                     Calculation          Masked 403 Error?                             │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+<details>
+  <summary><b>🔍 View Visual Observatory Interface (Click to expand)</b></summary>
+  <br/>
+  <p align="center">
+    <img src="docs/assets/apple_pro_agenttrace.png" alt="AgentTrace Visual UI" width="750" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);" />
+  </p>
+</details>
 
 ### Key Capabilities:
 * **Forensic Action Hallucination Engine:** Cross-references natural language claims against physical tool invocation graphs to catch ghost actions (e.g. claiming a file was created or an email was dispatched without corresponding tool calls).

@@ -34,6 +34,35 @@ Evaluating large language models on static multiple-choice questions (MMLU, GSM8
 
 ---
 
+## 🛡️ Flagship Production Tool: AgentTrace
+> **Apple Pro Forensic Agent Observatory & Action-Hallucination Interceptor**
+
+![AgentTrace Apple Pro Visual Observatory](docs/assets/apple_pro_agenttrace.png)
+
+**AgentTrace** is an open-source runtime tracing, forensic trajectory auditing, and cryptographic state verification engine for autonomous AI agents. Built to intercept **Action Hallucinations** (Ghost Actions, Masked 403 Failures, and Circular Loops) before ungrounded agent responses reach users.
+
+### Key Capabilities:
+* **Forensic Action Hallucination Engine:** Cross-references natural language claims against physical tool invocation graphs to catch ghost actions (e.g. claiming a file was created or an email was dispatched without corresponding tool calls).
+* **Calibrated SQS Scorer (0.0 to 5.0):** Standard Quality Scoring modeled after production AI evaluation rubrics (Handshake R1 standards).
+* **SHA-256 Cryptographic Sandbox Verifier:** Ephemeral sandbox that compares pre- and post-execution filesystem hashes to mathematically prove real file edits vs. hallucinated claims.
+* **Apple Pro Visual Observatory:** Cupertino-grade dark mode visual UI featuring interactive timeline scrubbers, stdout/stderr inspection, and drag-and-drop JSONL ingestion.
+* **Red-Team Security Hardened:** Zero-XSS sanitization, ReDoS-bounded regexes, and strict directory traversal jail validation (`assert_safe_path`).
+
+### Quickstart
+```bash
+# 1. Run live terminal demo simulation
+PYTHONPATH=. python3 -m agenttrace.cli demo
+
+# 2. Launch the Apple Pro Visual Observatory
+PYTHONPATH=. python3 -m agenttrace.cli ui --port 8080
+# Open http://localhost:8080 in your browser
+
+# 3. Run full test suite (22/22 passing)
+PYTHONPATH=. pytest tests/ -v
+```
+
+---
+
 ## 🏗️ Pillar 1: Containerized Systems & Deterministic Test Harnesses
 
 *(Derived from production work on containerized benchmark engineering)*

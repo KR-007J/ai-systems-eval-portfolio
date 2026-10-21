@@ -1,9 +1,10 @@
 # AI Systems Evaluation & Agentic Benchmarking Portfolio
 
+[![CI Evaluation Pipeline](https://github.com/KR-007J/ai-systems-eval-portfolio/actions/workflows/eval_pipeline.yml/badge.svg)](https://github.com/KR-007J/ai-systems-eval-portfolio/actions)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Sandboxed%20Harnesses-2496ED.svg)](https://www.docker.com/)
 [![Testing](https://img.shields.io/badge/Testing-PyTest%20%7C%20CTRF-green.svg)](https://docs.pytest.org/)
-[![Status](https://img.shields.io/badge/Focus-Frontier%20AI%20%7C%20Agentic%20Systems-orange.svg)](#)
+[![Project Dynamo Standard](https://img.shields.io/badge/Pipeline-Harbor%20%7C%20Project%20Dynamo-0e8a16.svg)](docs/DYNAMO_HARBOR_INTERVIEW_BOOK.md)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
 > **Public Engineering Showcase** by **Krish Joshi** ([GitHub: @KR-007J](https://github.com/KR-007J) | [LinkedIn](https://www.linkedin.com/in/krish-joshi-aa952533b/))  

@@ -62,22 +62,55 @@ Evaluating large language models on static multiple-choice questions (MMLU, GSM8
 
 ### Key Capabilities:
 * **Forensic Action Hallucination Engine:** Cross-references natural language claims against physical tool invocation graphs to catch ghost actions (e.g. claiming a file was created or an email was dispatched without corresponding tool calls).
-* **Calibrated SQS Scorer (0.0 to 5.0):** Standard Quality Scoring modeled after production AI evaluation rubrics (Handshake R1 standards).
+* **Calibrated SQS Scorer (0.0 to 5.0):** Standard Quality Scoring modeled after production AI evaluation rubrics (Project Octahedron & Dynamo standards).
 * **SHA-256 Cryptographic Sandbox Verifier:** Ephemeral sandbox that compares pre- and post-execution filesystem hashes to mathematically prove real file edits vs. hallucinated claims.
 * **Apple Pro Visual Observatory:** Cupertino-grade dark mode visual UI featuring interactive timeline scrubbers, stdout/stderr inspection, and drag-and-drop JSONL ingestion.
 * **Red-Team Security Hardened:** Zero-XSS sanitization, ReDoS-bounded regexes, and strict directory traversal jail validation (`assert_safe_path`).
 
+### 🔄 Paradigm Shift: Before vs. After AgentTrace
+
+```mermaid
+flowchart LR
+    subgraph Before ["❌ WITHOUT AGENTTRACE (Ungrounded Generation)"]
+        direction TB
+        B1["Agent Prompt"] --> B2["LLM Inference"]
+        B2 --> B3["Unverified Text Claims<br/>('Deployed fix', 'Sent email')"]
+        B3 --> B4["Delivered to User<br/>(Silent 403s & Ghost Actions)"]
+    end
+
+    subgraph After ["✅ WITH AGENTTRACE (Deterministic Interceptor)"]
+        direction TB
+        A1["Agent Prompt"] --> A2["Tool Invocation Sandbox"]
+        A2 --> A3["AgentTrace Trajectory Auditor"]
+        A3 --> A4{"Grounded Check &amp;<br/>SHA-256 Hash Delta"}
+        A4 -- "Discrepancy" --> A5["SQS &lt; 3.0: Intercepted &amp; Blocked"]
+        A4 -- "Verified" --> A6["SQS 5.0: Gated Delivery"]
+    end
+
+    style Before fill:#ffebee,stroke:#c62828,stroke-width:1px
+    style After fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+```
+
+### 📖 Master Documentation & Interview Books
+* **[Technical Interview Playbook: Why & How I Designed AgentTrace](docs/INTERVIEW_PLAYBOOK.md)** — Origin story, before/after architecture, candidate defense scripts, and high-frequency technical interview Q&A.
+* **[AgentTrace System Architecture & SQS Formulation](docs/ARCHITECTURE.md)** — Formal mathematical SQS rubric specification, trajectory lifecycle, and failure taxonomy.
+* **[Project Dynamo & Docker Harbor Benchmark Interview Book](docs/DYNAMO_HARBOR_INTERVIEW_BOOK.md)** — Deep-dive into containerized SWE benchmarking, two-tier verifiers, and Harbor formats.
+
 ### Quickstart
 ```bash
 # 1. Run live terminal demo simulation
-PYTHONPATH=. python3 -m agenttrace.cli demo
+agenttrace demo
+# or: PYTHONPATH=. python3 -m agenttrace.cli demo
 
-# 2. Launch the Apple Pro Visual Observatory
-PYTHONPATH=. python3 -m agenttrace.cli ui --port 8080
+# 2. Audit any agent trajectory log (JSONL) with SQS scoring
+agenttrace audit examples/sample_traces/action_hallucination.jsonl
+
+# 3. Launch the Apple Pro Visual Observatory dashboard
+agenttrace ui --port 8080
 # Open http://localhost:8080 in your browser
 
-# 3. Run full test suite (22/22 passing)
-PYTHONPATH=. pytest tests/ -v
+# 4. Run full test suite (22/22 passing in 0.03s)
+pytest tests/ -v
 ```
 
 ---

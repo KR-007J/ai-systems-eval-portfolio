@@ -89,7 +89,7 @@ sequenceDiagram
 
 ## 4. Structured Quality Score (SQS) Formulation
 
-The **SQS (Structured Quality Score)** provides an objective, calibrated 0.0 to 5.0 scale derived from the Handshake AI Senior Reviewer evaluation matrix:
+The **SQS (Structured Quality Score)** provides an objective, calibrated 0.0 to 5.0 scale derived from frontier AI trajectory engineering rubrics (Project Octahedron & Project Dynamo at Handshake):
 
 $$\text{SQS} = \max\left(0.0, \, 5.0 - \sum w_i \cdot N_i - \min(1.0, 0.25 \cdot F_{\text{unrecovered}})\right)$$
 
